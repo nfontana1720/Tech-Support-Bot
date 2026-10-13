@@ -1,4 +1,4 @@
-# Helper functions for yes/no choices made by GitHub Copilot
+# Helper functions for yes/no choices and text operations made by GitHub Copilot
 def normalize_text(value):
     return str(value).strip().lower()
 
@@ -39,7 +39,7 @@ def print_steps(steps):
             print()
 
 
-def handle_wifi_follow_up(worked, setup_steps, vpn_action, previous_connection_steps):
+def handle_wifi_follow_up(worked, setup_steps, vpn_action):
     if is_yes(worked):
         print("Great! Your device is now connected to the network.")
         print()
@@ -73,19 +73,6 @@ def handle_wifi_follow_up(worked, setup_steps, vpn_action, previous_connection_s
         elif not is_no(vpn_worked):
             print("Invalid response. Please answer Yes or No.")
             print()
-    print_question_spacing()
-    wifi_before = ask_question("Have you connected to URI_Secure on this device before? (Yes/No): ")
-    print()
-    if is_yes(wifi_before):
-        print_steps(previous_connection_steps)
-        print_question_spacing()
-        steps = ask_question("Would you like to see the previous steps again? (Yes/No): ")
-        print()
-        if is_yes(steps):
-            print_steps(setup_steps)
-    elif is_no(wifi_before):
-        print("Please contact the URI IT Help Desk for further assistance.")
-        print()
 
 
 # Choice for Wi-Fi Help 
@@ -103,11 +90,27 @@ print("5. Other")
 print()
 device_type = normalize_text(ask_question("Enter your choice: "))
 print()
+wifi_before = None
+if device_type in {
+    "windows", "1", "window", "windows 11",
+    "macos", "mac", "2", "mac os", "macbook", "apple computer",
+    "android", "3", "samsung", "Samsgung",
+    "4", "iphone", "ipad", "apple", "ios",
+}:
+    wifi_before = ask_question("Have you connected to URI_Secure on this device before? (Yes/No): ")
+    print()
 print()
 print()
 
 # How to troubleshoot Wi-Fi issues for Windows
 if device_type in {"windows", "1", "window", "windows 11"}:
+    previous_connection_steps = [
+        "Step 1: Open system settings.",
+        "Step 2: Search for Manage User Certificates.",
+        "Step 3: Click on Personal, then Certificates.",
+        "Step 4: Delete any certificates that say URI using the red X icon on the top of the window.",
+        "Step 5: Try connecting using the previous steps.",
+    ]
     setup_steps = [
         "Step 1: Join the temporary setup network called URI_Open.",
         "Step 2: Open a web browser (not Chrome) and search for wifi.uri.edu and log in with your URI account.",
@@ -115,6 +118,11 @@ if device_type in {"windows", "1", "window", "windows 11"}:
         "Step 4: Open the Cloudpath installer to install the certificate.",
         "Step 5: Once the certificate is installed, open Wi-Fi settings and connect to URI_Secure.",
     ]
+    if is_yes(wifi_before):
+        print_steps(previous_connection_steps)
+        print_question_spacing()
+    print_bold("Connecting Windows to URI_Secure")
+    print()
     print_steps(setup_steps)
 
     print_question_spacing()
@@ -124,25 +132,30 @@ if device_type in {"windows", "1", "window", "windows 11"}:
         worked,
         setup_steps,
         "Please fully uninstall the VPN from your system files and try connecting using the previous steps.",
-        [
-            "Step 1: Open system settings.",
-            "Step 2: Search for Manage User Certificates.",
-            "Step 3: Click on Personal, then Certificates.",
-            "Step 4: Delete any certificates that say URI using the red X icon on the top of the window.",
-            "Step 5: Try connecting using the previous steps.",
-        ],
     )
 
 # How to troubleshoot Wi-Fi issues for MacOS
 elif device_type in {"macos", "mac", "2", "mac os", "macbook", "apple computer"}:
+    previous_connection_steps = [
+        "Step 1: Open system settings.",
+        "Step 2: Search for VPN & Device Management.",
+        "Step 3: Click on Profiles.",
+        "Step 4: Delete any profiles that say URI; Enter your computer password when prompted.",
+        "Step 5: Try connecting using the previous steps.",
+    ]
     setup_steps = [
         "Step 1: Join the temporary setup network called URI_Open.",
         "Step 2: Open a web browser (not Chrome) and search for wifi.uri.edu and log in with your URI account.",
-        "Step 3: Select download for MacOS and allow the profile download.",
+        "Step 3: Select download for MacOS, open the file in downloads, and allow the profile download.",
         "Step 4: Open system settings and search for VPN & Device Management.",
         "Step 5: Under profile downloads, double click the profile and select install; Enter your device password when prompted.",
         "Step 6: Open Wi-Fi settings and connect to URI_Secure.",
     ]
+    if is_yes(wifi_before):
+        print_steps(previous_connection_steps)
+        print_question_spacing()
+    print_bold("Connecting MacOS to URI_Secure")
+    print()
     print_steps(setup_steps)
 
     print_question_spacing()
@@ -152,17 +165,15 @@ elif device_type in {"macos", "mac", "2", "mac os", "macbook", "apple computer"}
         worked,
         setup_steps,
         "Please fully uninstall the VPN from VPN settings and try connecting using the previous steps.",
-        [
-            "Step 1: Open system settings.",
-            "Step 2: Search for VPN & Device Management.",
-            "Step 3: Click on Profiles.",
-            "Step 4: Delete any profiles that say URI; Enter your computer password when prompted.",
-            "Step 5: Try connecting using the previous steps.",
-        ],
     )
 
 # How to troubleshoot Wi-Fi issues for Android
 elif device_type in {"android", "3", "samsung", "Samsgung", "Android"}:
+    previous_connection_steps = [
+        "Step 1: Open your Wi-Fi settings.",
+        "Step 2: Tap and hold URI_Secure, then select Forget network.",
+        "Step 3: Try connecting using the previous steps.",
+    ]
     setup_steps = [
         "Step 1: Join the temporary setup network called URI_Open and turn off MAC address randomization.",
         "Step 2: Open the play store and download the cloudpath app.",
@@ -170,6 +181,11 @@ elif device_type in {"android", "3", "samsung", "Samsgung", "Android"}:
         "Step 4: After logging in, select download for Android and allow the certificate download through cloudpath.",
         "Step 5: Once cloudpath confirms that the certificate is installed, open your Wi-Fi settings and connect to URI_Secure.",
     ]
+    if is_yes(wifi_before):
+        print_steps(previous_connection_steps)
+        print_question_spacing()
+    print_bold("Connecting Android to URI_Secure")
+    print()
     print_steps(setup_steps)
 
     print_question_spacing()
@@ -179,15 +195,17 @@ elif device_type in {"android", "3", "samsung", "Samsgung", "Android"}:
         worked,
         setup_steps,
         "Please fully uninstall the VPN from VPN settings and try connecting using the previous steps.",
-        [
-            "Step 1: Open your Wi-Fi settings.",
-            "Step 2: Tap and hold URI_Secure, then select Forget network.",
-            "Step 3: Try connecting using the previous steps.",
-        ],
     )
 
 # How to troubleshoot Wi-Fi issues for iPhone & iPad
 elif device_type in {"4", "iphone", "ipad", "apple", "ios"}:
+    previous_connection_steps = [
+        "Step 1: Open system settings.",
+        "Step 2: Search for VPN & Device Management.",
+        "Step 3: Click on Profiles.",
+        "Step 4: Delete any profiles that say URI; Enter your computer password when prompted.",
+        "Step 5: Try connecting using the previous steps.",
+    ]
     setup_steps = [
         "Step 1: Join the temporary setup network called URI_Open.",
         "Step 2: Open a web browser (not Chrome) and search for wifi.uri.edu and log in with your URI account.",
@@ -196,6 +214,11 @@ elif device_type in {"4", "iphone", "ipad", "apple", "ios"}:
         "Step 5: Under profile downloads, double click the profile and select install; Enter your device password when prompted.",
         "Step 6: Once the certificate is installed, open your Wi-Fi settings and connect to URI_Secure.",
     ]
+    if is_yes(wifi_before):
+        print_steps(previous_connection_steps)
+        print_question_spacing()
+    print_bold("Connecting iPhone & iPad to URI_Secure")
+    print()
     print_steps(setup_steps)
 
     print_question_spacing()
@@ -205,13 +228,6 @@ elif device_type in {"4", "iphone", "ipad", "apple", "ios"}:
         worked,
         setup_steps,
         "Please fully uninstall the VPN from VPN settings and try connecting using the previous steps.",
-        [
-            "Step 1: Open system settings.",
-            "Step 2: Search for VPN & Device Management.",
-            "Step 3: Click on Profiles.",
-            "Step 4: Delete any profiles that say URI; Enter your computer password when prompted.",
-            "Step 5: Try connecting using the previous steps.",
-        ],
     )
 
 # How to troubleshoot Wi-Fi issues for Other Devices
