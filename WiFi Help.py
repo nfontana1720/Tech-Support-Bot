@@ -135,11 +135,9 @@ elif device_type in {"macos", "mac", "2", "mac os", "macbook", "apple computer"}
     print()
     print("Step 4: Open system settings and search for VPN & Device Management.")
     print()
-    print("Step 5: Once the certificate is installed, open your Wi-Fi settings and connect to URI_Secure.")
+    print("Step 5: Under profile downloads, double click the profile and select install; Enter your device password when prompted.")
     print()
-    print("Step 6: Double click the profile and select install; Enter your computer password when prompted.")
-    print()
-    print("Step 7: Open Wi-Fi settings and connect to URI_Secure.")
+    print("Step 6: Open Wi-Fi settings and connect to URI_Secure.")
     print()
     print()
     print()
@@ -175,11 +173,9 @@ elif device_type in {"macos", "mac", "2", "mac os", "macbook", "apple computer"}
                 print()
                 print("Step 4: Open system settings and search for VPN & Device Management.")
                 print()
-                print("Step 5: Once the certificate is installed, open your Wi-Fi settings and connect to URI_Secure.")
+                print("Step 5: Under profile downloads, double click the profile and select install; Enter your device password when prompted.")
                 print()
-                print("Step 6: Double click the profile and select install; Enter your computer password when prompted.")
-                print()
-                print("Step 7: Open Wi-Fi settings and connect to URI_Secure.")
+                print("Step 6: Open Wi-Fi settings and connect to URI_Secure.")
                 print()
 
         elif is_no(vpn_check):
@@ -326,3 +322,144 @@ elif device_type in {"android", "3", "samsung", "Samsgung", "Android"}:
     else:
         print("Invalid response. Please answer Yes or No.")
         print()
+
+# How to troubleshoot Wi-Fi issues for iPhone & iPad
+elif device_type in {"iphone", "ipad", "iPhone", "iPad", "apple", "Apple", "ios", "IOS"}:
+    print("Step 1: Join the temporary setup network called URI_Open.")
+    print()
+    print("Step 2: Open a web browser (not Chrome) and search for wifi.uri.edu and log in with your URI account.")
+    print()
+    print("Step 3: Select download for iPhone or iPad and allow the profile download.")
+    print()
+    print("Step 4: Open system settings and search for VPN & Device Management.")
+    print()
+    print("Step 5: Under profile downloads, double click the profile and select install; Enter your device password when prompted.")
+    print()
+    print("Step 6: Once the certificate is installed, open your Wi-Fi settings and connect to URI_Secure.")
+    print()
+    print()
+    print()
+
+    worked = input("Did this fix your Wi-Fi issue? (Yes/No): ")
+    print()
+    
+    if is_no(worked):
+        print("Please make sure that your settings are up to date and that you are NOT using a VPN.")
+        print()
+# How to remove a VPN on iPhone & iPad
+        print()
+        print()
+        vpn_check = input("Are you using a VPN? (Yes/No/Not Sure): ")
+        print()
+
+        if is_yes(vpn_check) or is_not_sure(vpn_check):
+            print("Please fully uninstall the VPN from VPN settings and try connecting using the previous steps.")
+            print()
+            print()
+            print()
+
+            steps = input("Would you like to see the previous steps? (Yes/No): ")
+            print()
+
+            if is_yes(steps):
+                print("Step 1: Join the temporary setup network called URI_Open.")
+                print()
+                print("Step 2: Open a web browser (not Chrome) and search for wifi.uri.edu and log in with your URI account.")
+                print()
+                print("Step 3: Select download for iPhone or iPad and allow the profile download.")
+                print()
+                print("Step 4: Open system settings and search for VPN & Device Management.")
+                print()
+                print("Step 5: Under profile downloads, double click the profile and select install; Enter your device password when prompted.")
+                print()
+                print("Step 6: Open Wi-Fi settings and connect to URI_Secure.")
+                print()
+
+        elif is_no(vpn_check):
+            print()
+            print()
+            wifi_before = input("Have you connected to URI_Secure on this device before? (Yes/No): ")
+            print()
+            
+# How to remove a profile on iPhone & iPad
+            if is_yes(wifi_before):
+                print("Step 1: Open system settings")
+                print()
+                print("Step 2: Search for VPN & Device Management")
+                print()
+                print("Step 3: Click on Profiles")
+                print()
+                print("Step 4: Delete any profiles that say URI; Enter your computer password when prompted.")
+                print()
+                print("Step 5: Try connecting using the previous steps.")
+                print()
+                print()
+                print()
+
+                steps = input("Would you like to see the previous steps? (Yes/No): ")
+                print()
+
+                if is_yes(steps):
+                    print("Step 1: Join the temporary setup network called URI_Open.")
+                    print()
+                    print("Step 2: Open a web browser (not Chrome) and search for wifi.uri.edu and log in with your URI account.")
+                    print()
+                    print("Step 3: Select download for iPhone or iPad and allow the profile download.")
+                    print()
+                    print("Step 4: Open system settings and search for VPN & Device Management.")
+                    print()
+                    print("Step 5: Once the certificate is installed, open your Wi-Fi settings and connect to URI_Secure.")
+                    print()
+                    print("Step 6: Double click the profile and select install; Enter your computer password when prompted.")
+                    print()
+                    print("Step 7: Open Wi-Fi settings and connect to URI_Secure.")
+                    print()
+
+            elif is_no(wifi_before):
+                print("Please contact the URI IT Help Desk for further assistance.")
+                print()
+
+    elif is_yes(worked):
+        print("Great! Your device is now connected to URI_Secure.")
+        print()
+
+    else:
+        print("Invalid response. Please answer Yes or No.")
+        print()    
+
+# How to troubleshoot Wi-Fi issues for Other Devices
+elif device_type in {"other", "5", "other device", "other devices"}:
+    print("Step 1: Go to rhodywifi.uri.edu using a different device that is already connected to the university wi-fi.")
+    print()
+    print("Step 2: Click on Register a Device and log in with your URI account.")
+    print()
+    print("Step 3: Click on Create a Device and select your device type from the drop down menu.")
+    print()
+    print("Step 4: Locate your device's MAC address and enter it in the webpage.")
+    print()
+    print("Step 5: Select create device and restart or unplug the device you want to register.")
+    print()
+    print("Step 6: Once the device is restarted, open Wi-Fi settings and connect to URI_Open.")
+    print("Note: Devices registered this way will only be able to connect to URI_Open, but it will work the same as URI_Secure for the device.")
+    print()
+    print()
+    print()
+
+    worked = input("Did this fix your Wi-Fi issue? (Yes/No): ")
+    print()
+
+    if is_no(worked):
+        print("Please make sure that you fully reset your device or contact the URI IT Help Desk for further assistance.")
+        print()
+
+    elif is_yes(worked):
+        print("Great! Your device is now connected to URI_Secure.")
+        print()
+
+    else:
+        print("Invalid response. Please answer Yes or No.")
+        print()
+
+else:
+    print("Invalid response. Please select your device type:")
+    print()  
