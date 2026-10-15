@@ -1,44 +1,77 @@
-# Choice for SSO Help 
-print("You selected SSO Password Help.")
+# Helper functions for formatting questions and steps
+def ask_question(question):
+    print(f"\033[1m{question}\033[0m", end="")
+    return input()
+
+
+def print_bold(text):
+    print(f"\033[1m{text}\033[0m")
+
+
+def print_steps(steps):
+    for index, step in enumerate(steps):
+        if step.startswith("Step "):
+            label, text = step.split(": ", 1)
+            print(f"\033[1m{label}:\033[0m {text}")
+        else:
+            print(step)
+        if index < len(steps) - 1:
+            print()
+
+
+# Choice for SSO Help
+print("You selected Single Sign-On Help.")
 print()
 
-#Ask user to select an option
-
-option = input("Please select an option (1-4): ")
+# Select an option
+print_bold("Please select an option:")
 print()
-
-print("Please select an option:")
-print("1. I know my current SSO password and want to reset it.")   
-print("2. I do not know my current SSO password and need help resetting it.")
+print("1. I know my current password and want to reset it.")
+print("2. I do not know my current password and need help resetting it.")
 print("3. I need help setting up my account for the first time.")
 print("4. What is SSO?")
+print()
+option = ask_question("Enter your choice (1-4): ")
+print()
 
-if option == "1": 
-    print("To reset your SSO password, please follow these steps:")
+if option == "1":
+    print_bold("To reset your password, please follow these steps:")
     print()
-    print("Step 1: Open a web browser and search for password.uri.edu.")
-    print("Step 2: Click on reset using current password.")   
-    print("Step 3: Enter your current credentials and follow the prompts to create your new password.")
+    print_steps([
+        "Step 1: Open a web browser and go to password.uri.edu",
+        'Step 2: Select "Reset using current password."',
+        "Step 3: Enter your current credentials and follow the instructions to create a new password.",
+    ])
 
 elif option == "2":
-    print("Please join the IT service desk zoom meeting at uri-edu.zoom.us for further assistance.")
-    print("Note: You will need to show a form of photo id to verify your identity before resetting your password.")
+    print_bold("Resetting a forgotten password")
+    print()
+    print("Join the URI IT Service Desk Zoom meeting at uri-edu.zoom.us for help resetting your password.")
+    print()
+    print("\033[1;3mNote:\033[0m\033[3m You must show a photo ID to verify your identity before your password can be reset.\033[0m")
 
 elif option == "3":
-    print("To set up your SSO account for the first time, please ensure that you have been assigned a student ID number and have created your e-campus account.")
-    print("If you have not done so refer to step 1 on the getting started page linked below.")
-    print("Please visit https://its.uri.edu/getting-started-students/ to set up your account.")
-    print("Note: After you have set up your account, it will be ready for use in 1-3 business days.")
-    
+    print_bold("Setting up your account for the first time")
+    print()
+    print("Before setting up your account, make sure you have been assigned a student ID number and URI email address.")
+    print()
+    print("If you have not received your student ID number or URI email address, allow time for them to be issued.")
+    print("For questions about your enrollment status, contact Enrollment Services at 401-874-9500")
+    print("Once you have your student ID number and URI email address, visit https://its.uri.edu/getting-started-students/ and follow the instructions to set up your account.")
+    print()
+    print("\033[1;3mNote:\033[0m\033[3m Your account may take 1-3 business days to become available after setup.\033[0m")
+
 elif option == "4":
-    print("Here is some general information about SSO:")
-    print("SSO stands for Single Sign-On.")
-    print("It allows you to access multiple applications with a single set of credentials.")
-    print("Your SSO password is separate from your Microsoft Authenticator pin. *Select option 3 on the main menu for help with Microsoft Authenticator.")
-    print("SSO also allows you to access e-Campus, brightspace, and other URI applications.")
-    print("In order to check your email you will need to sign in to gmail.com with your SSO credentials.")
-    print("Note: You will not be able to use outlook to access your emails.")
-    print("If you are a current student, faculty, or staff member you have free acess to Microsoft Office 365 by loging in with your SSO credentials.")
+    print_bold("About SSO")
+    print()
+    print_steps([
+        "SSO stands for Single Sign-On.",
+        "It lets you sign in to multiple applications with one set of credentials.",
+        "Your SSO password is separate from your Microsoft Authenticator PIN. For help setting up Microsoft Authenticator, select option 3 from the main menu.",
+        "Use your SSO credentials to access e-Campus, Brightspace, and other URI applications.",
+        "To check your email, sign in to gmail.com with your SSO credentials.",
+        "\033[1;3mNote:\033[0m\033[3m You cannot access your URI email through Outlook.\033[0m",
+    ])
 
 else:
     print("Invalid response. Please select an option (1-4).")
